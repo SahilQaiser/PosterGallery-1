@@ -8,23 +8,42 @@
 </head>
 
 <body onselectstart="return false">
-    <div class="container">
-        <div class="photo photo-center photo-front" onclick="turn(this)">
+    <div class="container" id="container">
+        <div id=photo_{{index}} class="photo photo-center photo-front" onclick="turn(this)">
             <div class="photo-wrap">
                 <div class="side side-front">
-                    <p class="image"><img src="images/1.jpg"></p>
-                    <p class="caption">大圣归来</p>
+                    <p class="image"><img src="images/{{img}}"></p>
+                    <p class="caption">{{caption}}</p>
                 </div>
                 <div class="side side-back">
-                    <p class="desc">导演: 田晓鹏 编剧: 田晓鹏 / 刘虎 / 米粒 / 金冉 / 金成 主演: 张磊 / 林子杰 / 吴文伦 / 童自荣 / 刘九容 / 更多... 类型: 喜剧 / 动作 / 动画 / 奇幻 制片国家/地区: 中国大陆 语言: 汉语普通话 / 粤语 上映日期: 2015-07-10(中国大陆) 片长: 89分钟 又名: 大圣归来 / 猴王 / 西游记3D / Monkey King: Hero is Back / CUG: King of Heroes</p>
+                    <p class="desc">{{desc}}</p>
                 </div>
             </div>
         </div>
     </div>
+    <script src="js/data.js"></script>
     <script>
+    	function $(selector){
+    		var method = selector.substr(0,1) == '.' ? 'getElementsByClassName' : 'getElementById';
+    		return document[method](selector.substr(1));
+    	}
+    	var data = data;
+    	function addPhotos(){
+    		var template = $('#container').innerHTML;
+    		var html = [];
+    		for(i in data){
+    			var _html = template
+    											.replace('{{index}}',i)
+								    			.replace('{{img}}',data[i].img)
+								    			.replace('{{caption}}',data[i].caption)
+								    			.replace('{{desc}}',data[i].desc);
+					html.push(_html)
+    		}
+    		$('#container').innerHTML = html.join('')
+    	}
+    	addPhotos();
     	function turn(ele){
 				var clas = ele.className;
-				console.log(/photo-front/.test(clas))
 				if(/photo-front/.test(clas)){
 					clas = clas.replace(/photo-front/,'photo-back')
 				}else{
