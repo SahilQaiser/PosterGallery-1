@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body onselectstart="return false">
     <div class="container">
-        <div class="photo photo-center photo-front">
+        <div class="photo photo-center photo-front" onclick="turn(this)">
             <div class="photo-wrap">
                 <div class="side side-front">
                     <p class="image"><img src="images/1.jpg"></p>
@@ -21,6 +21,18 @@
             </div>
         </div>
     </div>
+    <script>
+    	function turn(ele){
+				var clas = ele.className;
+				console.log(/photo-front/.test(clas))
+				if(/photo-front/.test(clas)){
+					clas = clas.replace(/photo-front/,'photo-back')
+				}else{
+					clas = clas.replace(/photo-back/,'photo-front')
+				}
+				return ele.className = clas;
+			}
+    </script>
 </body>
 
 </html>
