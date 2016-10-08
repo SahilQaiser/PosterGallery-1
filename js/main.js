@@ -17,6 +17,7 @@ var data = data;
 function addPhotos() {
     var template = $('#container').innerHTML;
     var html = [];
+    var nav = [];
     for (i in data) {
         var _html = template
             .replace('{{index}}', i)
@@ -24,7 +25,9 @@ function addPhotos() {
             .replace('{{caption}}', data[i].caption)
             .replace('{{desc}}', data[i].desc);
         html.push(_html)
+        nav.push('<span id="nav_'+i+'" class="icon" onclick="turn($(\'#photo_'+i+'\'))"></span>')
     }
+    html.push('<div class="nav">'+nav.join('')+'</div>')
     $('#container').innerHTML = html.join('');
     console.log(random([0, data.length]))
     sort(random([0, data.length]))
@@ -57,6 +60,12 @@ function sort(n) {
         photo.style.top = random(ranges.right.y) + 'px';
         photo.style['transform'] = 'rotate(' + random([-150, 150]) + 'deg)';
     }
+    var navs = $('.icon');
+    for(var i = 0; i < navs.length; i++){
+        navs[i].className = navs[i].className.replace(/\s*icon_current\s*/,' ')
+        navs[i].className = navs[i].className.replace(/\s*icon_back\s*/,' ')
+    }
+    $('#nav_'+n).className += ' icon_current '
 }
 
 //计算左右分区的范围
@@ -84,10 +93,13 @@ function range() {
 //翻转控制
 function turn(ele) {
     var clas = ele.className;
+    var n = ele.id.split('_')[1];
     if (/photo-front/.test(clas)) {
         clas = clas.replace(/photo-front/, 'photo-back')
+        $('#nav_'+n).className += 'icon_back'
     } else {
         clas = clas.replace(/photo-back/, 'photo-front')
+        $('#nav_'+n).className = $('#nav_'+n).className.replace(/icon_back/,'')
     }
     return ele.className = clas;
 }
