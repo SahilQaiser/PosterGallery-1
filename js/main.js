@@ -45,7 +45,7 @@ function sort(n) {
         _photo[i].className += ' photo-front ';
         _photo[i].style.left = '';
         _photo[i].style.top = '';
-        _photo[i].style['transform'] = 'rotate(360deg)';
+        _photo[i].style['transform'] = 'rotate(360deg) scale(1.3)';
         photos.push(_photo[i]);
     }
     var photo_center = $('#photo_' + n);
@@ -58,13 +58,13 @@ function sort(n) {
         var photo = photos_left[i];
         photo.style.left = random(ranges.left.x) + 'px';
         photo.style.top = random(ranges.left.y) + 'px';
-        photo.style['transform'] = 'rotate(' + random([-150, 150]) + 'deg)';
+        photo.style['transform'] = 'rotate(' + random([-150, 150]) + 'deg) scale(1)';
     }
     for (i in photos_right) {
         var photo = photos_right[i];
         photo.style.left = random(ranges.right.x) + 'px';
         photo.style.top = random(ranges.right.y) + 'px';
-        photo.style['transform'] = 'rotate(' + random([-150, 150]) + 'deg)';
+        photo.style['transform'] = 'rotate(' + random([-150, 150]) + 'deg) scale(1)';
     }
     var navs = $('.icon');
     for(var i = 0; i < navs.length; i++){
@@ -91,7 +91,7 @@ function range() {
     range.wrap = wrap;
     range.photo = photo;
     range.left.x = [0 - photo.w, wrap.w / 2 - photo.w / 2];
-    range.left.y = [0 - photo.h, photo.h];
+    range.left.y = [0, photo.h*2];
     range.right.x = [wrap.w / 2 + photo.w / 2, wrap.w + photo.w];
     range.right.y = range.left.y;
     return range;
