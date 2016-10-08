@@ -39,7 +39,13 @@ function sort(n) {
     var _photo = $('.photo');
     var photos = [];
     for (var i = 0; i < _photo.length; i++) {
-        _photo[i].className = _photo[i].className.replace(/\s*photo_center\s*/, '');
+        _photo[i].className = _photo[i].className.replace(/\s*photo-center\s*/, '');
+        _photo[i].className = _photo[i].className.replace(/\s*photo-front\s*/, '');
+        _photo[i].className = _photo[i].className.replace(/\s*photo-back\s*/, '');
+        _photo[i].className += ' photo-front ';
+        _photo[i].style.left = '';
+        _photo[i].style.top = '';
+        _photo[i].style['transform'] = 'rotate(360deg)';
         photos.push(_photo[i]);
     }
     var photo_center = $('#photo_' + n);
@@ -94,6 +100,9 @@ function range() {
 function turn(ele) {
     var clas = ele.className;
     var n = ele.id.split('_')[1];
+    if(! /photo-center/.test(clas)){
+        return sort(n)
+    }
     if (/photo-front/.test(clas)) {
         clas = clas.replace(/photo-front/, 'photo-back')
         $('#nav_'+n).className += 'icon_back'
